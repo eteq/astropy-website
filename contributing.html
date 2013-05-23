@@ -1,0 +1,192 @@
+
+
+<!DOCTYPE html>
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+
+    <title>Contributing to Astropy &mdash; Astropy</title>
+
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '',
+        VERSION:     '0.1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-dropdown.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-scrollspy.js"></script>
+    <link rel="shortcut icon" href="_static/astropy_logo.ico"/>
+    <link rel="top" title="Astropy" href="index.html" />
+<script type="text/javascript">
+(function () {
+  /**
+   * Patch TOC list.
+   *
+   * Will mutate the underlying span to have a correct ul for nav.
+   *
+   * @param $span: Span containing nested UL's to mutate.
+   * @param minLevel: Starting level for nested lists. (1: global, 2: local).
+   */
+  var patchToc = function ($span, minLevel) {
+    var $tocList = $("<ul/>").attr('class', "dropdown-menu"),
+      findA;
+
+    // Find all a "internal" tags, traversing recursively.
+    findA = function ($elem, level) {
+      var level = level || 0,
+        $items = $elem.find("> li > a.internal, > ul, > li > ul");
+
+      // Iterate everything in order.
+      $items.each(function (index, item) {
+        var $item = $(item),
+          tag = item.tagName.toLowerCase(),
+          pad = 10 + ((level - minLevel) * 10);
+
+        if (tag === 'a' && level >= minLevel) {
+          // Add to existing padding.
+          $item.css('padding-left', pad + "px");
+          // Add list element.
+          $tocList.append($("<li/>").append($item));
+        } else if (tag === 'ul') {
+          // Recurse.
+          findA($item, level + 1);
+        }
+      });
+    };
+
+    // Start construction and return.
+    findA($span);
+
+    // Wipe out old list and patch in new one.
+    return $span.empty("ul").append($tocList);
+  };
+
+  $(document).ready(function () {
+    // Patch the global and local TOC's to be bootstrap-compliant.
+    patchToc($("span.globaltoc"), 1);
+    patchToc($("span.localtoc"), 2);
+
+    // Activate.
+    $('#topbar').dropdown();
+  });
+}());
+</script>
+
+<meta property="og:title" content="The Astropy Project" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="http://www.astropy.org" />
+<meta property="og:image" content="http://www.astropy.org/_static/square_logo.png" />
+<meta property="og:description" content="The Astropy project is a common effort to develop a single core package for Astronomy that brings together almost 100 developers from around the world. Development is actively ongoing, with major packages such as PyFITS, PyWCS, vo, and asciitable already merged in. A first stable release is scheduled for early May." />
+<meta property="og:site_name" content="Astropy" />
+
+<script type="text/javascript">var switchTo5x=false;</script>
+<script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "0058c3cf-18b8-4998-981c-deb0ef7fb67a"}); </script>
+
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30968842-1']);
+  _gaq.push(['_setDomainName', 'astropy.org']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+
+
+  </head>
+  <body>
+  
+  <div class="topbar" data-scrollspy="scrollspy" >
+    <div class="topbar-inner">
+      <div class="container">
+        <a class="brand" href="index.html"></a>
+        <ul class="nav">
+          
+            <li><a href="docs.html" rel="nofollow">Documentation</a></li>
+<li><a href="#" rel="nofollow">Contributing</a></li>
+<li><a href="team.html" rel="nofollow">The Team</a></li>
+
+          
+        </ul>
+        <ul class="nav secondary-nav">
+          <li>
+          
+            
+<form class="pull-left" action="http://docs.astropy.org/en/v0.2/search.html" method="get">
+  <input type="text" name="q" placeholder="Search Documentation" />
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <a href="http://github.com/astropy/astropy"><img style="position: fixed; top: 0px; right: 0; border: 0; z-index: 100000;" src="_static/fork_me_on_github.png" alt="Fork me on GitHub"/></a>
+
+<div class="container">
+   
+  <div class="section" id="contributing-to-astropy">
+<h1>Contributing to Astropy<a class="headerlink" href="#contributing-to-astropy" title="Permalink to this headline">¶</a></h1>
+<p>There are many different ways you can contribute to the Astropy project!</p>
+<div class="section" id="report-issues">
+<h2>Report issues<a class="headerlink" href="#report-issues" title="Permalink to this headline">¶</a></h2>
+<p>Even if you don&#8217;t have time to contribute code or documentation, please make
+sure you report any issues with the package, the documentation, or this
+website, to the Astropy <a class="reference external" href="http://github.com/astropy/astropy/issues">issue tracker</a>!</p>
+</div>
+<div class="section" id="contribute-code">
+<h2>Contribute code<a class="headerlink" href="#contribute-code" title="Permalink to this headline">¶</a></h2>
+<p>If you are interested in contributing fixes, code or documentation to Astropy
+(whether the core package or affiliated packages), you can join the
+<a class="reference external" href="http://groups.google.com/group/astropy-dev">astropy-dev</a> mailing list, and head over to the documentation pages on
+<a class="reference external" href="http://astropy.readthedocs.org/en/latest/development/workflow/index.html">contributing</a> to Astropy. You can either send us a patch, or (preferably)
+work on a fork of Astropy and submit the changes via a pull request.</p>
+</div>
+<div class="section" id="develop-an-affiliated-package">
+<h2>Develop an affiliated package<a class="headerlink" href="#develop-an-affiliated-package" title="Permalink to this headline">¶</a></h2>
+<p>Whether you have an idea for a new Astronomy package, or already have a
+package that you want to integrate with the Astropy project, you can develop
+an affiliated package! After joining the <a class="reference external" href="http://groups.google.com/group/astropy-dev">astropy-dev</a> list and notifying
+other developers of your intent to develop an affiliated package, you can head
+over <a class="reference external" href="https://github.com/astropy/package-template">here</a> for instructions on
+getting started! We can even create a repository for your affiliated package
+in the <cite>astropy</cite> organization on GitHub!</p>
+</div>
+</div>
+
+
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p class="pull-left">
+        &copy; Copyright 2012, The Astropy Collaboration.<br/>
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.<br/>
+    </p>
+    
+  </div>
+</footer>
+  </body>
+</html>
